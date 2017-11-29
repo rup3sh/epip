@@ -1,0 +1,48 @@
+#!/bin/python3
+
+import collections
+
+# Q 12.10 EPIP, Find length of longest contained interval
+
+def longestContainedRange(intarr):
+	
+	intset = set(intarr)
+	longest_range = []
+	longest_count_so_far = 0
+	
+	while intset:
+		i = intset.pop()
+		range_c = 1
+		range_window = {i}
+		#print(i)
+		
+		while True:
+			is_contiguous = False
+			#print("Range:", range_c, i-range_c, i+range_c)
+			if (i - range_c) in intset:
+				range_window.add(i-range_c)
+				is_contiguous = True
+			if (i + range_c) in intset:	
+				range_window.add(i+range_c)
+				is_contiguous = True
+			if not is_contiguous:
+				break
+			range_c +=1					
+		#print(range_window)
+				
+		if len(range_window) > longest_count_so_far:
+			longest_count_so_far = len(range_window)
+			longest_range = range_window
+			# You can remove all elements that are already found in range
+			intset = intset - range_window 
+	return (longest_range)								
+		
+				
+def main():
+	
+	a = [10, 5, 3 , 11,6,100, 4] 
+	x = longestContainedRange(a)
+	print("LongestRange:", x)
+	
+	
+if __name__=="__main__":main()

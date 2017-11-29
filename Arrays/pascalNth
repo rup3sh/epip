@@ -1,0 +1,31 @@
+#!/bin/python3
+
+import sys
+import random
+
+# Question 5.12 (variant)
+
+def main(argv):
+
+	triangle = genPascalNth(6)
+	print(" Triangle:{}".format(triangle))
+
+# Space is O(n) and time is O(n-sq) 
+def genPascalNth(n):
+	
+	print ("Running {} problem..".format('pascal triangle'))
+	
+	# Nice way to prepare the triangle's row data structure with 1s filled
+	a = [1 for i in range(n)]
+
+	for row_len in range(1,n):
+		
+		a_prev=1
+		for i in range(1, row_len):
+			a_next = a[i]						
+			a[i] = a[i] + a_prev
+			a_prev = a_next 
+			
+	return a
+ 
+if __name__ == "__main__":main(sys.argv[0:])

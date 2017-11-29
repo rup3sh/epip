@@ -1,0 +1,26 @@
+#!/bin/python3
+
+# EPIP 17.2
+
+# Minimize total waiting time for servicing queries
+	
+def minimizeWaitingTime(service_times):
+	
+	service_times.sort()
+	
+	total_delay = 0
+	
+	for i in range(0, len(service_times)):
+		remaining_services = (len(service_times) - (i+1))
+		total_delay += service_times[i] * remaining_services
+	
+	print(service_times)
+	return total_delay
+			
+def main():
+
+	service_t = [2,5,1,3]
+		
+	print("Total Service Time:",minimizeWaitingTime(service_t))
+
+if __name__=="__main__":main()

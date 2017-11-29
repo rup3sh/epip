@@ -1,0 +1,33 @@
+#!/bin/python3
+
+# EPIP 
+# make change demo
+	
+def makeChange(amount):
+	
+	coins = [100, 50, 25, 10, 5, 1]
+	final_coins = []
+	num_coins = 0
+	
+	for coin in coins:
+	
+		num_coins = amount // coin
+		amount -= num_coins*coin
+		#print("Amount:", amount)
+		
+		if (num_coins > 0):
+			final_coins.append((coin, num_coins))
+		if amount==0:
+			break
+			
+	print(final_coins)
+	return sum(i[1] for i in final_coins)
+			
+def main():
+
+	#cents = 75
+	#cents = 23
+	cents = 47
+	print("Num coins for Change:",makeChange(cents))
+
+if __name__=="__main__":main()

@@ -1,0 +1,53 @@
+#!/bin/python3
+
+import collections
+
+class LRU:
+	
+	def __init__(self, capacity):
+		self.capacity = capacity
+		self.cache = collections.OrderedDict()
+		
+	def insert(self, item, value):
+	
+		if self.capacity <= len(self.cache):	
+			#LIFO if last is True, FIFO if false
+			x = self.cache.popitem(last=False)
+			print("Popping out:", x)
+				
+		self.cache[item] = value
+				
+				
+	def lookup(self, item):
+	
+		val = None
+		
+		if item in self.cache:
+			val = self.cache.pop(item)
+			self.cache[item] = val
+			#popitem = self.cache.popitem()
+			#print(popitem)
+		
+		return val	
+	
+	def printLru(self):
+		print("============")
+		for item in self.cache:
+			print(item)				
+				
+def main():
+
+	lru = LRU(5)
+	lru.insert("deified", 4)
+	lru.insert('q', 8)
+	lru.insert('mm', 2)
+	lru.insert('zz', 8)
+	lru.insert('tt', 4)
+	lru.printLru()
+		
+	x = lru.lookup('tt')
+	print("Lookedup:", x)
+	lru.insert('xx', 4)
+	lru.printLru()
+	
+if __name__=="__main__":main()

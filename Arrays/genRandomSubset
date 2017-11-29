@@ -1,0 +1,36 @@
+#!/bin/python3
+
+import sys
+import random
+
+# Question 5.12, generate random subset of size K (without replacement)
+# the logic is to take a random number on right-side of array and swap it with 
+# pointer index starting left-to-right. 
+# Then reduce the range of random number by 1.
+
+def main(argv):
+
+	testcase_2 = [310,315,275,295,260,270,290,230,255, 250] 
+	testcase_1 = [3,7,5,11]
+	testcase = testcase_1
+	
+	k = 3
+	subset = genRandomSubsetOfSizeK(testcase, k)
+
+	print(" Subset:{}".format(subset))
+
+# Space is O(1) and time is O(K)
+def genRandomSubsetOfSizeK(a, k):
+	#Check k is less than len(a)
+	print ("Running {} problem..".format('random subset'))
+	
+	for i in range(1, k+1):
+		x = random.randint(i,len(a)-1)
+		a[i-1], a[x] = a[x], a[i-1] 
+		## Basically swapping is the key here to separate already picked numbers
+		## from the remianing pool
+
+	return a[:k]		
+	
+ 
+if __name__ == "__main__":main(sys.argv[0:])

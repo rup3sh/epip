@@ -1,0 +1,27 @@
+#!/bin/python3
+
+import sys
+import random
+
+# Question 5.12
+
+def main(argv):
+
+	triangle = genPascalTri(6)
+	print(" Triangle:{}".format(triangle))
+
+# Space is O(n-sq) and time is 
+def genPascalTri(n):
+	
+	print ("Running {} problem..".format('pascal triangle'))
+	
+	# Nice way to prepare the triangle data structure
+	result = [[1] * (i+1) for i in range(n)]
+	
+	for row in range(2,n):
+		target_row = result[row - 1]
+		for col in range(1,len(result[row])-1):
+			 result[row][col] = target_row[col-1] + target_row[col]
+	return result
+ 
+if __name__ == "__main__":main(sys.argv[0:])

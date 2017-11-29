@@ -1,0 +1,33 @@
+#!/bin/python3
+
+import collections
+# Q 12.6 EPIP
+
+def nearestRepeatedEntry(strarr):
+	
+	nearest_so_far = len(strarr)
+	nearest_word = None
+	
+	counter = dict()
+	
+	for index, word in enumerate(strarr):
+	
+		if word in counter:
+			last_index = counter[word]
+			if (index - last_index) < nearest_so_far:
+				nearest_so_far = index - last_index 
+				nearest_word = (word, last_index, index)
+		
+		counter[word] = index		
+		
+	
+	return nearest_word		
+				
+def main():
+	
+	a = ["all","work","and","no","play","makes","for","no","work","no","fun","and","no","results"]
+	x = nearestRepeatedEntry(a)
+	print("Nearest:", x, " distance:", x[2]-x[1])
+	
+	
+if __name__=="__main__":main()

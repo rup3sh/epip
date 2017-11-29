@@ -1,0 +1,45 @@
+#!/bin/python3
+
+import sys
+
+# Q 5.1 Dutch national flag (partition in 3 sections as per given pivot)
+# Basically <pivot send to one side, >pivot send to another side and == pivot remain in middle
+def main(argv):
+
+	testcase_1 = [1,2,0,0, 2, 1,1,2,2,0]
+	testcase_2 = [2, 1, 0, 2,2,0,0, 2, 1,1,2,2,2]
+
+	testcase = testcase_2
+
+
+	dutchFlag(testcase)
+
+	print("Result: " + str(testcase))
+
+# BAsically solves in O(N) time and O(1) space
+def dutchFlag(a):
+	
+	print ("Running dutch national flag problem..")
+	#If len is less than 3 return
+	low = 0
+	high = len(a)-1
+	pivot = 0
+	p_value = 1
+	print("Input: " + str(a))
+	print("Pivot value:{}".format(p_value))
+	#print("high index:" + str(high))
+
+	while(pivot<=high):
+	
+		if(a[pivot]==p_value):
+			pivot+=1
+		elif (a[pivot]<p_value):
+			#print("high index:" + str(high) + " Pivot:" + str(pivot) )
+			a[low], a[pivot] = a[pivot], a[low]
+			low+=1
+			pivot+=1
+		else:  ## a[low]<a[pivot]
+			a[high], a[pivot] = a[pivot], a[high]
+			high-=1
+
+if __name__ == "__main__":main(sys.argv[0:])

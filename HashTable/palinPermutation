@@ -1,0 +1,26 @@
+#!/bin/python3
+
+import collections
+
+# String can be permuted to form a palindrome if and only if:
+# 1. if its even len then char counts should be even
+# 2. If its odd length then at most one letter is odd count(i.e. one)
+# 3. Nice implementation below:
+# EPIP 12.1
+
+class Solution(object):
+	
+	def canbePermutedToFormPalindrome(self, s):
+		counter = collections.Counter(s)	
+		print(sum(i%2 for i in counter.values())<=1)
+					
+def main():
+	sol = Solution()
+	a = "deified"
+	for c in 'abcdefghij':
+		print(chr(ord(c)+2))
+		
+	result = sol.canbePermutedToFormPalindrome(a)
+	print(result)
+	
+if __name__=="__main__":main()

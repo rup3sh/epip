@@ -1,0 +1,35 @@
+#!/bin/python3
+
+## 16.3 EPIP
+##  Count number of ways to traverse 2D array
+
+class Solution:
+
+	def num_of_ways(self, n,m):
+	
+		def compute_num_ways_to_xy(x, y):
+		
+			if x==y==0:
+				return 1
+		
+			if num_ways_cache[x][y]==0:
+			
+				ways_top  = 0 if x == 0 else compute_num_ways_to_xy(x-1,y)
+				ways_left = 0 if y == 0 else compute_num_ways_to_xy(x, y-1) 	
+				num_ways_cache[x][y] = ways_top + ways_left
+			
+			return num_ways_cache[x][y]	
+				
+		num_ways_cache = [[0]*m for _ in range(n)]
+		print(num_ways_cache)
+		
+		return compute_num_ways_to_xy(n-1, m-1)			
+			
+			
+def main():
+
+	sol = Solution()	
+	val = sol.num_of_ways(4,4)
+	print("Result", val)
+	
+if __name__=="__main__":main()

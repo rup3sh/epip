@@ -1,0 +1,35 @@
+#!/bin/python3
+
+import sys
+# Question 5.6 (max profit that could be generated from buying stock once)
+
+def main(argv):
+
+	testcase = [310,315,275,295,260,270,290,230,255, 250] 
+
+	buyStockOnce(testcase)
+
+def buyStockOnce(a):
+	
+	print ("Running {} problem..".format('buyStockOnce'))
+	
+	max_profit = 0
+	low_so_far = a[0]
+	high = a[0]
+	
+	for i in range(1, len(a)):
+	
+		profit = a[i] - low_so_far
+		if profit > max_profit:
+			max_profit = profit
+			max_high = a[i]
+		
+		if low_so_far> a[i]:
+			low_so_far = a[i]		
+	
+
+	print ("Max profit {} is based on buying low at {} and selling high at {}"\
+			.format(max_profit, max_high-max_profit, max_high))
+	
+ 
+if __name__ == "__main__":main(sys.argv[0:])

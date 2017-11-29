@@ -1,0 +1,41 @@
+#!/bin/python3
+
+# EPIP 17.3
+
+# Interval covering problem
+	
+# My greedy algo:(not implemented here)
+# - Sort by beginning of interval
+# - Pick end of first, beginning of last
+# - If they are same, pick first one
+# - Eliminate sets covered by those
+# - Go over the remaining sets
+	
+def minimizeIntervals(intervals):
+	if not intervals:
+		return []
+		
+	results = []	
+	#Sort by ending time
+	intervals.sort(key=lambda x:x[1])
+	print(intervals)
+	
+	last = float('-inf')
+	
+	for interval in intervals:
+		if interval[0]>last:
+			last = interval[1]
+			results.append(interval[1])
+			
+			
+	#print(results)
+	return(results)		
+			
+def main():
+
+	intervals = [(0,3), (6,9), (3,4), (2,6)]
+	#intervals = [(1,2), (2,3), (2,3), (3,4), (3,4), (4,5)]
+		
+	print("Visit Times:", minimizeIntervals(intervals))
+
+if __name__=="__main__":main()

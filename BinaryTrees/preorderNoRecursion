@@ -1,0 +1,135 @@
+#!/bin/python3
+
+import sys
+
+
+# Q 9.8 Preorder traversal without recursion
+LOOKUPS= 0
+
+def main(argv):
+	
+        print ("Creating bin tree")
+
+        tree = createBinaryTreeManually3()
+	
+        print("Doing : preorder_tree_traversal")
+        preorder_tree_traversal(tree)
+        print("Doing : preorder_tree_traversal with stack")
+        preorder_tree_traversal_with_stack(tree)
+       
+def preorder_tree_traversal_with_stack(node):
+	
+        result = []
+        stack = []
+
+        #TODO Sanity checks
+
+        while node or stack:
+        
+                if(node):
+                        stack.append(node)
+                        print("At {}".format(node.data))
+                        node = node.left
+                else:
+                        x = stack.pop()                       
+                        node = x.right
+
+def preorder_tree_traversal(root):
+	
+	if root:		
+		##sys.stdout.write("{},".format(root.data))
+                print(" At {}".format(root.data))
+                preorder_tree_traversal(root.left)
+                preorder_tree_traversal(root.right)
+
+# Tree on Fig 9.2, pg 11
+def createBinaryTreeManually():
+        
+        #leaf_1 = Btn('E')
+        #leaf_2 = Btn('F')
+        leaf_1 = Btn('E', Btn('X'), None)
+        leaf_2 = Btn('F', None, Btn('Y'))        
+        leaf_3 = Btn('I')
+        leaf_4 = Btn('J')
+        leaf_5 = Btn('M')
+        leaf_6 = Btn('N')
+	
+        d3_1 = Btn('D', leaf_1, leaf_2)
+        d3_2 = Btn('G')
+
+        d2_1 = Btn('C', d3_1, d3_2)
+        d2_2 = Btn('H', leaf_3, leaf_4)
+        d2_3 = Btn('L', leaf_5,leaf_6)
+        d2_4 = Btn('O')
+
+        d1_1 = Btn('B',d2_1, d2_2)
+        d1_2 = Btn('K',d2_3, d2_4)
+
+        d0 = Btn('A', d1_1, d1_2)
+        return d0
+
+# Tree on Fig 9.1, pg 113
+def createBinaryTreeManually2():
+	
+	leaf_1 = Btn(641)
+	leaf_2 = Btn(257)
+	leaf_3 = Btn(17)
+	leaf_4 = Btn(28)
+	leaf_5 = Btn(28)
+	leaf_6 = Btn(0)
+
+	d4_1 = Btn(401,None,leaf_1)
+	
+	d3_1 = Btn(3, leaf_3, None)
+	d3_2 = Btn(1, d4_1, leaf_2)
+
+	d2_1 = Btn(271, leaf_4,leaf_6)
+	d2_2 = Btn(561, None, d3_1)
+	d2_3 = Btn(2, None,d3_2)
+	d2_4 = Btn(271,None,leaf_5)
+
+	d1_1 = Btn(6,d2_1, d2_2)
+	d1_2 = Btn(6,d2_3, d2_4)
+
+	d0 = Btn(314, d1_1, d1_2)
+	return d0
+
+# Tree on Fig 9.1, pg 113 (with letters)
+def createBinaryTreeManually3():
+	
+	leaf_1 = Btn('M')
+	leaf_2 = Btn('N')
+	leaf_3 = Btn('H')
+	leaf_4 = Btn('D')
+	leaf_5 = Btn('P')
+	leaf_6 = Btn('E')
+
+	d4_1 = Btn('L',None,leaf_1)
+	
+	d3_1 = Btn('G', leaf_3, None)
+	d3_2 = Btn('K', d4_1, leaf_2)
+
+	d2_1 = Btn('C', leaf_4,leaf_6)
+	d2_2 = Btn('F', None, d3_1)
+	d2_3 = Btn('J', None,d3_2)
+	d2_4 = Btn('O',None,leaf_5)
+
+	d1_1 = Btn('B',d2_1, d2_2)
+	d1_2 = Btn('I',d2_3, d2_4)
+
+	d0 = Btn('A', d1_1, d1_2)
+	return d0
+#Binary tree node
+class Btn():
+
+	def __init__(self, node_data, left_node=None, right_node=None):
+
+		self.data = node_data
+		self.left = left_node
+		self.right = right_node
+	
+	def __str__(self):
+
+		return str(self.data)
+
+if __name__ == "__main__":main(sys.argv[0:])

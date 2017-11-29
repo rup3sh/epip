@@ -1,0 +1,181 @@
+#!/bin/python3
+
+import sys
+from binarytree import show, inspect, tree, convert
+
+# Q 9.1 Check if binary tree is balanced (do postorder traversal)
+LOOKUPS= 0
+
+def main(argv):
+	
+	print ("Creating bin tree")
+
+	tree = createBinaryTreeManually()
+	
+	#print(str(tree))
+
+	#print("Doing : inorder_tree_traversal")
+	inorder_tree_traversal(tree)
+	print('\n')
+
+	is_balanced, height = isBalancedPreOrderForUnderstanding(tree)
+	 
+	if is_balanced:
+	    print("Tree is balanced {} height={}.".format(is_balanced, height))
+	else:
+	    print("Tree is unbalanced {} height={}.".format(is_balanced, height))
+
+	print ("LOOK UPS  {}".format(LOOKUPS))
+
+        # Why does post-order traversal takes less lookups than preorder traversal?
+        # Possibly its incedental, because the left side of the tree is unbalanced 
+        # and preorder detects that to terminate early.
+
+# Basically doing post-order traversal
+# Think of doing with only 3 nodes      O
+# then bottom leaf is height 1         / \                                      
+#                                     O   O  
+def isBalancedPostOrderForUnderstanding(tree):
+
+        global LOOKUPS
+        LOOKUPS +=1
+        if not tree:
+                print("Reached end.")              
+                return (True,-1) ## This is imp here.
+        print("At ", tree.data)
+        left_balanced, left_height = isBalancedForPostOrderUnderstanding(tree.left)
+        
+        if not left_balanced:
+                return (False, 0)
+        
+        right_balanced, right_height = isBalancedPostOrderForUnderstanding(tree.right)
+        
+        if not right_balanced:
+                return (False, 0)
+                
+        is_balanced = abs(left_height - right_height)<=1
+        height = max(left_height, right_height)+1  
+        print("Height ", height)            
+        return (is_balanced, height)
+
+def isBalancedPreOrderForUnderstanding(tree):
+
+        global LOOKUPS
+        LOOKUPS +=1
+        if not tree:
+                print("Reached end.")              
+                return (True,-1) ## This is imp here.
+        print("At ", tree.data)
+        
+        right_balanced, right_height = isBalancedPreOrderForUnderstanding(tree.right)
+        
+        if not right_balanced:
+                return (False, 0)
+
+        left_balanced, left_height = isBalancedPreOrderForUnderstanding(tree.left)
+        
+        if not left_balanced:
+                return (False, 0)
+                
+        is_balanced = abs(left_height - right_height)<=1
+        height = max(left_height, right_height)+1  
+        print("Height ", height)            
+        return (is_balanced, height)
+
+def isBalanced(tree):
+
+        global LOOKUPS
+        LOOKUPS +=1
+        if not tree:               
+                return (True,-1) ## This is imp here.
+
+        left_balanced, left_height = isBalanced(tree.left)
+        
+        if not left_balanced:
+                return (False, 0)
+        
+        right_balanced, right_height = isBalanced(tree.right)
+        
+        if not right_balanced:
+                return (False, 0)
+                
+        is_balanced = abs(left_height - right_height)<=1
+        height = max(left_height, right_height)+1              
+        return (is_balanced, height)
+        
+
+
+def inorder_tree_traversal(root):
+	
+	if root:
+		inorder_tree_traversal(root.left)
+		sys.stdout.write("{},".format(root.data))
+		inorder_tree_traversal(root.right)
+
+
+# Tree on Fig 9.2, pg 11
+def createBinaryTreeManually():
+        
+        #leaf_1 = Btn('E')
+        #leaf_2 = Btn('F')
+        leaf_1 = Btn('E', Btn('X'), None)
+        leaf_2 = Btn('F', None, Btn('Y'))        
+        leaf_3 = Btn('I')
+        leaf_4 = Btn('J')
+        leaf_5 = Btn('M')
+        leaf_6 = Btn('N')
+	
+        d3_1 = Btn('D', leaf_1, leaf_2)
+        d3_2 = Btn('G')
+
+        d2_1 = Btn('C', d3_1, d3_2)
+        d2_2 = Btn('H', leaf_3, leaf_4)
+        d2_3 = Btn('L', leaf_5,leaf_6)
+        d2_4 = Btn('O')
+
+        d1_1 = Btn('B',d2_1, d2_2)
+        d1_2 = Btn('K',d2_3, d2_4)
+
+        d0 = Btn('A', d1_1, d1_2)
+        return d0
+
+# Tree on Fig 9.1, pg 113
+def createBinaryTreeManually2():
+	
+	leaf_1 = Btn(641)
+	leaf_2 = Btn(257)
+	leaf_3 = Btn(17)
+	leaf_4 = Btn(28)
+	leaf_5 = Btn(28)
+	leaf_6 = Btn(0)
+
+	d4_1 = Btn(401,None,leaf_1)
+	
+	d3_1 = Btn(3, leaf_3, None)
+	d3_2 = Btn(1, d4_1, leaf_2)
+
+	d2_1 = Btn(271, leaf_4,leaf_6)
+	d2_2 = Btn(561, None, d3_1)
+	d2_3 = Btn(2, None,d3_2)
+	d2_4 = Btn(271,None,leaf_5)
+
+	d1_1 = Btn(6,d2_1, d2_2)
+	d1_2 = Btn(6,d2_3, d2_4)
+
+	d0 = Btn(314, d1_1, d1_2)
+	return d0
+
+#Binary tree node
+class Btn():
+
+	def __init__(self, node_data, left_node=None, right_node=None):
+
+		self.data = node_data
+		self.left = left_node
+		self.right = right_node
+	
+	def __str__(self):
+
+		return str(self.data)
+
+if __name__ == "__main__":main(sys.argv[0:])
