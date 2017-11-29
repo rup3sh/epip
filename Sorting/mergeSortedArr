@@ -1,0 +1,46 @@
+#!/bin/python3
+
+import sys
+
+# 13.2 Merge 2 sorted arrays (merge from behind for O(M+N) complexity
+
+# When 2 list are almost same size
+def merge(A, B):
+
+	a = len(A) - 1
+	b = len(B) - 1
+	
+	wi = len(A)+len(B) -1
+	#print(a, b, wi)
+	for i in range(len(A), wi+1):
+		A.append(None)
+	#print(A)
+	
+	while a>=0 and b>=0:
+		if B[b]>=A[a]:
+			A[wi] = B[b]
+			b-=1
+		else:
+			A[wi]=A[a]
+			a-=1
+		wi-=1
+	
+	print(a,b)
+	
+	while b>=0: ## Means all bs left are smaller
+		A[wi]=B[b]
+		b-=1
+		wi-=1			
+	
+			
+def main(argv):
+
+	result = [5,13,17]
+	r = [3,7,11,19]
+	
+	merge(result, r)
+	
+	print(result)
+      
+
+if __name__ == "__main__":main(sys.argv[0:])

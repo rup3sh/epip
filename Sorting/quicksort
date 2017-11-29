@@ -1,0 +1,89 @@
+#!/bin/python3
+
+import sys
+
+def main(argv):
+
+        print("Running quick sort ..")
+      
+        unsorted = [ 99,8,10, 200, 4,5,16,500,34, 200,500,12,300,500, 1,2,13,22 ]
+        unsorted = [100, 200, 300, 400, 555, 556, 600, 677, 888, 999] 
+        #unsorted = [99,100]
+        print("Before sort: {}".format(unsorted))
+        quickSort(unsorted)    
+        print("After sort: {}".format(unsorted))
+
+
+def quickSort(a):
+
+	
+	def partition(left, right, pivot):
+		
+		leftPtr = left
+		rightPtr = right-1
+		#print("pivot:", pivot)
+		
+		while True:
+	
+			while leftPtr< len(a) and a[leftPtr] < pivot:
+				leftPtr+=1
+			
+			 ## To accomodate equal/duplicate elements use '=' here	
+			while rightPtr > 0 and a[rightPtr]>=pivot:			
+				rightPtr-=1
+				
+			if rightPtr<=leftPtr:
+				break
+			
+			a[leftPtr], a[rightPtr] = a[rightPtr], a[leftPtr]
+			
+			#print(leftPtr, rightPtr, a)
+		
+		a[leftPtr], a[right] = a[right], a[leftPtr]
+		#Return the final pivot index
+		
+		return leftPtr
+	
+	def partitionGt(left, right, pivot):
+		
+		leftPtr = left
+		rightPtr = right-1
+		#print("pivot:", pivot)
+		
+		while True:
+	
+			while leftPtr< len(a) and a[leftPtr] > pivot:
+				leftPtr+=1
+			
+			 ## To accomodate equal/duplicate elements use '=' here	
+			while rightPtr > 0 and a[rightPtr]<=pivot:			
+				rightPtr-=1
+				
+			if rightPtr<=leftPtr:
+				break
+			
+			a[leftPtr], a[rightPtr] = a[rightPtr], a[leftPtr]
+			
+			#print(leftPtr, rightPtr, a)
+		
+		a[leftPtr], a[right] = a[right], a[leftPtr]
+		#Return the final pivot index
+		
+		return leftPtr
+		
+		
+	# Basic qsort template	
+	def qsort(left,right):
+		
+		if left<right:
+		
+			pivot = a[right] #Pivot Values			
+			partition_index = partitionGt(left,right, pivot)
+			qsort(left, partition_index-1)
+			qsort(partition_index+1, right)
+	
+	#test_pivot = a[-1]		
+	#partition(0, len(a)-1, test_pivot)
+	qsort(0, len(a)-1)
+
+if __name__ == "__main__":main(sys.argv[0:])

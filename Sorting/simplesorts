@@ -1,0 +1,79 @@
+#!/bin/python3
+
+import sys
+
+# Bubble-sort, O(N*N), largest goes to right most positon upon one itertation of N steps
+# It takes N times N steps to sort this. Simple to implement thtas why its taught.
+def main(argv):
+
+        print("Running bubble sort ..")
+      
+        unsorted = [ 8,10, 200, 4,5,16,500,200,500,12,300,500, 1,2,13 ]
+
+        bubbleSort(unsorted)
+        #selectionSort(unsorted)
+        #insertionSort(unsorted)      
+        print("After sort: {}".format(unsorted))
+
+# Insertion sort, works by copying items from left-to-right one at a time. 
+# The right end pointer keeps moving to left.
+# Then finally copying the target to end pointer
+# Worst case O(N2)
+# On first pass, it does one comparison, on second pass 2, on third pass 3 and so on
+# So total comparisons are 1+2+3+..N = N *(N+1)/2
+
+# REMEMBER these things while implementing:
+# 1. It easier if you think about/write the inner loop first.
+# 2. Its based on the idea of array being partially sorted on left
+# 3. The outer loop start with index 1 onwards
+
+
+def insertionSort(arr):
+
+	print("Insertion sort:")
+	
+	for i in range(1, len(arr)):
+		target = arr[i]
+		end = i
+		while end>0 and arr[end-1]>target:
+			arr[end] = arr[end-1]
+			end -=1
+		arr[end] = target
+
+	
+
+# Selection sort: you select the minimum and accumalate on the left. 
+# Each pass finds/selects minimum accumalates on the
+#left. Num of swaps are o(n) but comparisons are o(n2)
+
+def selectionSort(arr):
+	
+	#TODO: Sanity Check
+
+	print("Selection sort...")
+	for i in range(0, len(arr)):
+		
+		for j in range(i+1, len(arr)): # Each pass should have minimum to left
+						
+			if arr[j] < arr[i]:
+				 arr[j], arr[i] = arr[i], arr[j]
+
+	
+
+
+#Bubble sort bubbles(accumaltes on right)
+def bubbleSort(arr):
+		
+		#TODO Sanity Check
+
+		end = len(arr)
+		
+		for i in range(0, end):
+			for j in range(0, end-1): # At the end of this loop, one item is in its final position
+				if arr[j]>arr[j+1]:
+					arr[j], arr[j+1] = arr[j+1], arr[j] # Swap
+			end-=1	
+			        
+                
+
+if __name__ == "__main__":main(sys.argv[0:])

@@ -1,0 +1,121 @@
+#!/bin/python3
+
+import sys
+import random
+
+# Question 7.1 , merge 2 sorted lists
+
+class LinkedNode(object):
+
+	def __init__(self, data=None, next_node=None):
+		self.data = data
+		self.next = next_node
+
+def main(argv):
+
+	test_1 = [2,5,7,11,14,15,90,100]
+	ll = createLinkedList(test_1)
+	printLinkedList(ll)
+	
+	#deleteNodeAt(ll, 3)
+	#reverseSublist(ll,2,5)
+	reverseSublistWithLinkExchange(ll, 2, 5)
+	new_node = LinkedNode(99)
+	insertNodeAt(ll, new_node,3)
+
+	printLinkedList(ll)
+
+
+## Create from behind
+def createLinkedList(A):
+
+	head = None
+
+	for a in reversed(A):
+		head = LinkedNode(a, head)
+		#print("Created node:{}".format(a))
+	
+	return head
+
+
+def printLinkedList(node):
+	
+	#print ("Printing linked list ..")
+	
+	while node:
+		sys.stdout.write("{}->".format(node.data))
+		node = node.next
+	
+	print("NULL")
+	
+
+def linkexchange(node1, node2):
+	
+	
+
+def dataxchange(node1, node2):
+
+	if node1 and node2:
+
+		node1.data, node2.data = node2.data, node1.data
+		
+def deleteNodeAt(node, idx):
+
+	for i in range(1, idx):
+		node = node.next
+
+	node.next = node.next.next
+
+def insertNodeAt(node, new_node, idx):
+	
+	for i in range(2, idx):
+		print(i)
+		node = node.next		
+	
+	new_node.next = node.next
+	node.next = new_node
+
+def placeNode(node, idx):
+	
+	if idx <=0:
+		return node
+
+	for i in range(1, idx):
+		
+		if node:
+			node = node.next
+		else:
+			break
+	
+	return node	
+
+#Space is O(1) and time is O(index_len-squared)
+def reverseSublistWithLinkExchange(root, from_idx, to_idx):
+
+	if from_idx >= to_idx:
+		raise ValueError("Fix Index")
+
+	
+#Space is O(1) and time is O(index_len-squared)
+def reverseSublist(root, from_idx, to_idx):
+
+	if from_idx >= to_idx:
+		raise ValueError("Fix Index")
+
+	start = from_idx
+	end= to_idx
+	start_node = placeNode(root, start)
+	end_node   = placeNode(root, end)
+	print("Start placed at {}".format(start_node.data))
+	print("End placed at {}".format(end_node.data))
+	print("Aftre first xchange")
+	
+	while start<end:
+		dataxchange(start_node,end_node)
+		
+		start_node = start_node.next
+		start+=1
+		end -=1
+		end_node = placeNode(root, end) 
+		 
+if __name__ == "__main__":main(sys.argv[0:])

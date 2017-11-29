@@ -1,0 +1,69 @@
+#!/bin/python3
+
+import sys
+import itertools
+import heapq
+
+# Q 8.3
+
+def main(argv):
+
+        print("Running well formed string ..")
+        check_str = '{()}{()}'
+        #check_str = '{(())}{()}}'
+        #check_str = '}{()}}'
+        sys.stdout.write("String is: " + check_str)
+        if(isWellFormedPractise(check_str)):
+                print("    Well formed")
+        else:
+                print("    NOT well formed")
+
+
+def isWellFormedPractise(string):
+
+	ref = {'[':']', '{':'}', '(':')'}
+	
+	stack = []
+	
+	for c in string:
+		if c not in ref:
+			if not stack:
+				return False
+			else:
+				x = stack.pop()
+				if c != ref[x]:
+					return False
+		else:
+			stack.append(c)
+							
+	if stack:
+		return False
+		
+	return True
+
+
+
+def isWellFormed(strg):
+
+        ref_dict = {'{':'}', '[':']', '(':')'}
+
+        stack = []
+
+        for c in strg:
+                
+                if c in ref_dict:
+                        stack.append(c)
+                else:
+                        ## Remember to check length of stack before popping
+                        ## Here, it basically means a right-brace was found 
+                        ## without an opening brace.
+                        if len(stack)<1:
+                                return False
+
+                        p = stack.pop()
+                        if ref_dict[p] != c:
+                                return False                        
+        if len(stack)>0:
+                return False
+        return True
+if __name__ == "__main__":main(sys.argv[0:])

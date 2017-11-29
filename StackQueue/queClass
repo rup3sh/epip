@@ -1,0 +1,84 @@
+#!/bin/python3
+
+import sys
+import collections
+
+# Q 8.8  (implement queue)
+
+def main(argv):
+
+        q = CirQueue(4)
+        q.enqueue('a')
+        q.enqueue('b')
+        q.enqueue('c')
+        
+        x = q.dequeue()
+        print("Deq:{}".format(x))
+        q.enqueue('d')
+        q.enqueue('e')
+        x = q.dequeue()
+        print("Deq:{}".format(x))
+        q.enqueue('f')        
+        x = q.dequeue()
+        print("Deq:{}".format(x))
+        x = q.dequeue()
+        print("Deq:{}".format(x))
+
+        #q.printQueueInternal() 
+        print("Num elements in q {}".format(q.size()))      
+
+class CirQueue(object):
+
+        SCALE_FACTOR = 1
+        
+        def __init__(self, capacity):
+        
+                self.q = [None] * capacity
+                self.capacity = capacity
+                self.head = 0
+                self.tail = 0
+                self.num_elems = 0
+
+        def size(self):
+
+                return self.num_elems
+
+        def printQueueInternal(self):
+        
+                if self.num_elems ==0:
+                        print("Empty queue")
+                        return
+
+                print(str(self.q))
+                print("Head {}".format(self.q[self.head]))
+                print("Tail {}".format(self.q[self.tail-1]))
+
+        def resize(self):
+
+                print("Resizing...")
+                new_size = int(self.capacity  * CirQueue.SCALE_FACTOR)
+                new_q = [None] * new_size
+                print("Resizing...", new_size)
+                self.q = self.q + new_q
+                             
+                
+        def enqueue(self, x):
+                
+                if self.tail == self.capacity:
+                        self.resize()
+                 
+                self.q[self.tail] = x
+                self.tail += 1
+                self.num_elems +=1
+
+        def dequeue(self):   
+                
+                if self.num_elems ==0:
+                        raise IndexError("Empty queue")
+
+                val = self.q[self.head]
+                self.head +=1
+                self.num_elems -=1
+
+                return val
+if __name__ == "__main__":main(sys.argv[0:])

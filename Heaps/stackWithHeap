@@ -1,0 +1,53 @@
+#!/bin/python3
+
+import sys
+import itertools
+import heapq
+import collections
+
+#Q 10.7 Make stack with heap
+def main(argv):
+
+        print("Running stack made with heap ..")
+      
+        #Stack is FILO, needs max out for last-in first out, max can be evicted
+        stack = StackWithHeap()
+        stack.push('A')
+        stack.push('B')
+        stack.push('C')
+        stack.push('D')
+        print("Pop: {}".format(stack.pop()))
+        stack.push('E')
+        stack.push('F')
+        print("Pop: {}".format(stack.pop()))
+        print("Pop: {}".format(stack.pop()))
+        print("Pop: {}".format(stack.pop()))
+        print("Pop: {}".format(stack.pop()))
+        print("Pop: {}".format(stack.pop()))
+        print("Pop: {}".format(stack.pop()))
+        print("Pop: {}".format(stack.pop()))
+        print("Pop: {}".format(stack.pop()))
+
+
+class StackWithHeap():
+
+        def __init__(self):
+                self.__heap = []
+                self.__counter = 0 #Negative to simulate max heap
+
+        def push(self, x):
+                
+                heapq.heappush(self.__heap,(self.__counter,x))
+                self.__counter-=1                  
+                
+        def pop(self):
+                if  len(self.__heap)==0:
+                        raise IndexError("Empty Stack!")
+                self.__counter +=1
+                counter,elem = heapq.heappop(self.__heap)
+                return elem
+
+        def peek(self):
+                return self.__heap[0][0]
+
+if __name__ == "__main__":main(sys.argv[0:])

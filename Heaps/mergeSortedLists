@@ -1,0 +1,55 @@
+#!/bin/python3
+
+import sys
+import itertools
+import heapq
+import collections
+
+# Q 10.1
+def main(argv):
+
+        print("Running merge sorted arrays ..")
+      
+        sorted_arrays = [ [8,10, 200], [4,5,16], [12,300,500], [1,2,13] ]
+
+        merged=mergeSorted(sorted_arrays)
+      
+        print("Records: {}".format(merged))
+
+## Why dont you try directly makeing a tuple of iterators and elements?
+def mergeSorted(arrays):
+
+        #1. First make a list of iterators for arrays
+
+        iterators = [iter(x) for x in arrays]
+
+        #2. Get all first records and heapify it.
+        m_heap = []
+
+        for inum, it in enumerate(iterators):
+
+                elem = next(it)
+                if elem is None:
+                        continue
+                m_heap.append((elem, inum))
+
+        #3. Heapify it
+        heapq.heapify(m_heap)
+        #print(m_heap)
+
+        #4. Merge it
+        merged_list = []
+        while m_heap:
+                #Get min from heap; that is result
+                elem, inum = heapq.heappop(m_heap)
+                merged_list.append(elem)
+                #print(elem)
+                # Get next element and push it on the heap
+                next_elem = next(iterators[inum], None) # Reurns None if elem not found
+                if next_elem is not None:
+                        heapq.heappush(m_heap, (next_elem, inum))
+
+        return merged_list          
+                
+
+if __name__ == "__main__":main(sys.argv[0:])

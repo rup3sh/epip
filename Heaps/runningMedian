@@ -1,0 +1,60 @@
+#!/bin/python3
+
+import sys
+import itertools
+import heapq
+import collections
+
+#Q 10.5 Running Median (This one seems shorter than HackerRank implementation)
+
+def main(argv):
+
+        print("Running stack made with heap ..")
+      
+        running_values = [2,5,1,0,10,7,8,8,9,10,11]
+        #Answer should be 2, 3.5,2,1.5, 2, 3.5,5,6,7,7.5, 8
+
+        max_heap = [] # To keep lower than median values
+        min_heap = [] # to keep higher than median values
+       
+        running_median(max_heap, min_heap, running_values)
+
+def addNumber(lower, upper, val):
+
+        heapq.heappush(upper,val)
+        elem = heapq.heappop(upper) * -1
+        heapq.heappush(lower, elem)
+        #print("ADD UPPER:", str(upper))
+        #print("ADD LOWER:", str(lower))
+
+def rebalance(lower, upper):
+        
+        if len(lower)>len(upper):
+                x= -1 * heapq.heappop(lower)
+                heapq.heappush(upper, x)
+
+## Lower basically means lower than median bucket, upper means more than median bucket
+## lower is made from max_heap, upper is made from min_heap
+
+def running_median(lower, upper, x_seq):
+
+        for x in x_seq:
+                # MAIN TRICK IS THIS: 
+                # Always add number to upper first(min_heap), pop it then add this to lower(max_heap)
+                addNumber(lower, upper, x)
+                # IF length of lower is more, pop from lower and place in upper
+                # to make same size
+                rebalance(lower, upper)
+                # If length of 2 heaps is same, then median is simply lower+upper/2
+                # Else it is upper(min_heap)
+
+                if len(lower) == len(upper):
+                        median = ((-1 * lower[0]) + upper[0])/2                
+                else:
+                        median = upper[0] ## Key to problem is take from upper half
+
+                print("Median so far {}".format(median))               
+
+        
+
+if __name__ == "__main__":main(sys.argv[0:])

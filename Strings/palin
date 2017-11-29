@@ -1,0 +1,59 @@
+#!/bin/python3
+
+import sys
+
+def main(argv):
+	#print ("In main...\n")
+	#print (3*'01')
+	stre = "Madam     I'm   adam"
+	#print(stre[2:])
+	print(stre[:-2])
+	#stre = "liooil"
+	#stre = "gibberish"
+	if(isPalin(stre)):
+		print("Is palindrome")
+	else:
+		print ("Is not a palin")		
+
+	
+	if(isPalinSimple('sottoso')):
+		print("Is palindrome")
+	else:
+		print ("Is NOT a palin")
+
+def isPalinSimple(target):
+	
+	truth = [target[i] == target[-(i+1)] for i in range(len(target)//2)]
+	print("Truth " + str(truth))
+	return all(truth)
+
+#time O(n), space O(1)
+#Iterative (case-insensitive, ignores space)
+def isPalin(stre):
+	
+	si = 0
+	se = len(stre) - 1
+	
+	while si<= se:
+		
+		left   = stre[si].lower()
+		right  = stre[se].lower()
+		
+		while left not in 'abcdefghijklmnopqrstuvwxyz':
+			si=si+1
+			left   = stre[si].lower()
+			
+		while right not in 'abcdefghijklmnopqrstuvwxyz':
+			se=se-1
+			right  = stre[se].lower()
+			
+		#print("left:" + left + " right:" + right)
+		
+		if left!=right:
+			return 0
+		else:
+			si=si+1		
+			se=se-1			
+	return 1
+	
+if __name__ == "__main__":main(sys.argv[0:])

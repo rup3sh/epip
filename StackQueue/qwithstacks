@@ -1,0 +1,74 @@
+#!/bin/python3
+
+import sys
+import collections
+
+# Q 8.9  (implement queue)
+
+def main(argv):
+
+        q = QueueWithStacks()
+        q.enqueue('a')
+        q.enqueue('b')
+        q.enqueue('c')
+        
+        x = q.dequeue()
+        print("Deq:{}".format(x))
+        q.enqueue('d')
+        q.enqueue('e')
+        x = q.dequeue()
+        print("Deq:{}".format(x))
+        q.enqueue('f')        
+        x = q.dequeue()
+        print("Deq:{}".format(x))
+        x = q.dequeue()
+        print("Deq:{}".format(x))
+        q.enqueue('g')
+        x = q.dequeue()
+        print("Deq:{}".format(x)) 
+
+        q.printQueueInternal() 
+            
+
+class QueueWithStacks(object):
+
+        def __init__(self):
+        
+                self.s1 = []
+                self.s2 = [] 
+
+        def printQueueInternal(self):
+        
+                if not self.s2 and not self.s1:
+                        print("Empty queue")
+                        return
+
+                print("Stack 1 {}".format(str(self.s1)))
+                print("Stack 2 {}".format(str(self.s2)))
+                
+        def enqueue(self, x):
+                
+                # NO need for this : Need to bring s2 elems to s1 first if s1 is empty:
+                # We can wait to do this lazily until all dequeues happen
+                # This is the key to problem
+                ## if not self.s1 and self.s2:
+                #        while self.s2:
+                 #               self.s1.append(self.s2.pop())
+                
+                self.s1.append(x)
+
+        def dequeue(self):   
+               
+                if not self.s2: 
+                        #Pop s1 and push in s2
+                                while self.s1:
+                                        self.s2.append(self.s1.pop())
+
+                if len(self.s2) <1:
+                        raise IndexError("Empty queue")
+
+                return self.s2.pop()
+
+                
+              
+if __name__ == "__main__":main(sys.argv[0:])

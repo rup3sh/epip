@@ -1,0 +1,71 @@
+#!/bin/python3
+
+import sys
+import collections
+
+# Q 8.10  (implement queue)
+
+def main(argv):
+
+        q = QueueWithMaxAPI()
+        q.enqueue('1')
+        q.enqueue('2')
+        q.enqueue('5')
+        q.printQueueInternal()
+        print("Max in q:", q.getMax())
+        q.enqueue('8')
+        q.enqueue('8')
+        q.enqueue('3')
+        q.printQueueInternal()
+        print("Max in q: {}".format(q.getMax()))
+        q.enqueue('10')        
+        x = q.dequeue()
+        print("Deq:{}".format(x))    
+        q.printQueueInternal()
+        print("Max in q: {}".format(q.getMax()))
+
+            
+
+class QueueWithMaxAPI(object):
+
+        def __init__(self):
+        
+                self.q    = collections.deque()
+                self.maxq = collections.deque()
+
+        def printQueueInternal(self):
+        
+                if not self.q and not self.maxq:
+                        print("Empty queue")
+                        return
+
+                print("Que   {}".format(str(self.q)))
+                print("Max Q {}".format(str(self.maxq)))
+                
+        def enqueue(self, x):
+                
+                if not self.maxq or  self.maxq[0]==x:
+                        self.maxq.append(x)
+                elif self.maxq[0] < x:
+                        self.maxq.popleft()
+                        self.maxq.append(x)
+                                   
+                self.q.append(x)
+
+        def dequeue(self):   
+               
+               if self.maxq and self.q[0]<self.maxq[0]:
+                        self.maxq.popleft()
+
+               if self.q:
+                        return self.q.popleft()
+                      
+        def getMax(self):
+
+                if not self.maxq[0]:
+                        return IndexError("Queue is empty")
+                
+                return (self.maxq[0])
+                
+              
+if __name__ == "__main__":main(sys.argv[0:])

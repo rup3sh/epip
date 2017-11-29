@@ -1,0 +1,35 @@
+#!/bin/python3
+
+import sys
+import itertools
+import heapq
+
+# Q 8.4
+
+def main(argv):
+
+        print("Running well formed string ..")
+        check_path = '/usr/lib/../bin/gcc'
+        check_path = 'scripts//./../scripts/awkscripts/././'
+        pth = normalizePath(check_path)
+        print("Path is {}".format(pth))
+        
+def normalizePath(path):
+
+        if not path:
+                raise ValueError("Provide a path")
+
+        tokens = [t for t in path.split('/') if t not in ['','.']]
+
+        npath = []
+
+        for t in tokens:
+                if npath and t == "..": ## This lines is the key to problem
+                       npath.pop()
+                else:
+                        npath.append(t)
+
+        return '/' + '/'.join(npath) ## This line catches the typical bug
+
+        
+if __name__ == "__main__":main(sys.argv[0:])

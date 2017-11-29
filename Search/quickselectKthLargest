@@ -1,0 +1,79 @@
+#!/bin/python3
+
+import sys
+
+#Kth largest element
+# EPIP 11.8
+# Also  note the all elements at index less than K are greater than (equal to) K.
+# THis meas for finding Kth largest of streaming data, elements on the right side
+# of K can be deleted.
+
+def main(argv):
+
+	print("Running quick select based on quick sort ..")
+
+	#unsorted = [22, 33, 44, -10, -200, 300, 400, 55, 56, 60, 67, 888, 99]
+	
+	unsorted = [33, -5, -55, -6, 29, 98, 99, 20, 22, 34, 55, 66, 79, 89]
+	
+	cp_unsorted = list(unsorted)	
+	#unsorted = [99,100]
+	k = 4
+	ans = quickSelect(unsorted, k)    
+	print("Array after quick select: {}".format(unsorted))
+	print("Kth largest:", ans)
+	cp_unsorted.sort(reverse=True)
+	print("Actual answer: {}".format(cp_unsorted[k-1]))
+	 
+def quickSelect(a, k):
+	
+	def partitionGt(left, right, pivot):
+		
+		leftPtr = left
+		rightPtr = right-1
+		#print("pivot:", pivot)
+		
+		while True:
+	
+			while leftPtr< len(a) and a[leftPtr] > pivot:
+				leftPtr+=1
+			
+			 ## To accomodate equal/duplicate elements use '=' here	
+			while rightPtr > 0 and a[rightPtr]<=pivot:			
+				rightPtr-=1
+				
+			if rightPtr<=leftPtr:
+				break
+			
+			a[leftPtr], a[rightPtr] = a[rightPtr], a[leftPtr]
+			
+			#print(leftPtr, rightPtr, a)
+		
+		a[leftPtr], a[right] = a[right], a[leftPtr]
+		#Return the final pivot index
+		
+		return leftPtr
+		
+		
+	# Basic qsort template	
+	def qsort(left,right):
+		
+		if left<right:
+		
+			pivot = a[right] #Pivot Values			
+			partition_index = partitionGt(left,right, pivot)
+			if partition_index == k-1:
+				print("It did NOT sort everything but got answer!")
+				return a[k-1]
+			elif partition_index > k-1: 	
+				qsort(left, partition_index-1)
+			else:
+				qsort(partition_index+1, right)
+		
+		return a[k-1]		
+	
+	#test_pivot = a[-1]		
+	#partition(0, len(a)-1, test_pivot)
+	return qsort(0, len(a)-1)
+
+if __name__ == "__main__":main(sys.argv[0:])

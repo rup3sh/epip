@@ -1,0 +1,65 @@
+#!/bin/python3
+
+import sys
+import collections
+
+# Q 8.6  (not sure why stack)
+
+def main(argv):
+
+        print("Running sunset view ..")
+        # ID and height
+        bldg = collections.namedtuple('building', ('id', 'height'))
+
+        buildings = [] 
+        buildings.append(bldg(1, 7))
+        buildings.append(bldg(2, 4))
+        buildings.append(bldg(3, 8))
+        buildings.append(bldg(4, 2))
+        buildings.append(bldg(5, 9))
+        buildings.append(bldg(6, 9))
+        buildings.append(bldg(7, 10))
+        buildings.append(bldg(8, 9))
+
+        nums = sunsetView_WestToEast(buildings)
+        print("{} buildings see sunset".format(nums))
+
+        print("Going east to west Sees Sunset:")
+        sunsetEtoW = sunsetView_EastToWest(buildings)
+        print(str(sunsetEtoW))
+        print("Total: {}".format(len(sunsetEtoW)))
+
+#First would always see the sunset, then monotonically increasing would see.
+def sunsetView_WestToEast(buildings):
+
+        running_max = buildings[0].height 
+        count = 1
+        print("Going west to east Sees Sunset:\n{} with height {} ".format(1, running_max))
+
+        for b in buildings:
+                if b.height>running_max:
+                        print("{} with height {}".format(b.id,b.height))
+                        running_max = b.height
+                        count+=1
+        return count
+
+# This is tricky because monotonically decreasing would not work.
+# Use Stack
+
+def sunsetView_EastToWest(buildings):
+        
+        stack = []
+
+        for b in reversed(buildings):
+                           
+                while stack and stack[-1].height <= b.height:
+                       x =  stack.pop()
+                       #print("Popping {}".format(x))
+                
+                stack.append(b)
+                #print("Adding to stack", str(b))
+
+        return stack
+        
+
+if __name__ == "__main__":main(sys.argv[0:])

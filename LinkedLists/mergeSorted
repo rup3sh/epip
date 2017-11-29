@@ -1,0 +1,83 @@
+#!/bin/python3
+
+import sys
+import random
+
+# Question 7.1 , merge 2 sorted lists
+
+def main(argv):
+
+	test_1 = [2,5,7]
+	test_2 = [3,11]	
+	ll_1 = createLinkedList(test_1)
+	ll_2 = createLinkedList(test_2)
+	#ll_m = createListManually()
+	printLinkedList(ll_1)
+	printLinkedList(ll_2)
+
+	root = mergeAscendingLists(ll_1, ll_2)
+	printLinkedList(root)
+
+class LinkedNode(object):
+
+	def __init__(self, data=None, next_node=None):
+		self.data = data
+		self.next = next_node
+
+## Create from behind
+def createLinkedList(A):
+
+	head = None
+
+	for a in reversed(A):
+		head = LinkedNode(a, head)
+		#print("Created node:{}".format(a))
+	
+	return head
+
+
+def createListManually():
+	
+	next_node_2 = LinkedNode(8)	
+	next_node_1 = LinkedNode(7,next_node_2)
+	next_node_0 = LinkedNode(5,next_node_1) 
+	root_node   = LinkedNode(3,next_node_0)
+
+	return root_node
+	
+
+def printLinkedList(node):
+	
+	print ("Printing linked list ..")
+	
+	while node:
+		sys.stdout.write("{}->".format(node.data))
+		node = node.next
+	
+	print("NULL")
+	
+#Space is O(1) and time is O(n+m)
+def mergeAscendingLists(l1,l2):
+	
+	m = head = LinkedNode()
+
+	while l1 and l2:
+
+		if l1.data < l2.data:
+			print("Doing for {}".format(l1.data))
+			m.next = l1
+			l1 = l1.next
+			
+		else:
+			print("Doing for {}".format(l2.data))
+			m.next = l2
+			l2 = l2.next
+			
+		m = m.next
+	
+	m.next = l1 or l2
+
+	return head.next
+		
+ 
+if __name__ == "__main__":main(sys.argv[0:])

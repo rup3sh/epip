@@ -1,0 +1,41 @@
+#!/bin/python3
+
+import sys
+import itertools
+import heapq
+import collections
+
+#Q 10.3
+def main(argv):
+
+        print("Running K-almost sorted arrays ..")
+      
+        arr = [3,-1,2,6,4,5,8]
+
+        result=almostSorted(arr,2)
+      
+        print("Records: {}".format(result))
+
+
+def almostSorted(array,k):
+
+        min_heap = []
+        records = []
+
+        # Make a heap of K+1
+        for x in itertools.islice(array, k):
+                heapq.heappush(min_heap, x)    
+        
+        #Pop the minimun & Keep pushing new data to heap 
+        for x in array[2:]:
+                elem = heapq.heappop(min_heap)
+                records.append(elem)
+                heapq.heappush(min_heap, x)
+        
+        # Dont forget about remanining elemens in heap:
+        while min_heap:
+                records.append(heapq.heappop(min_heap))
+        
+        return records
+
+if __name__ == "__main__":main(sys.argv[0:])
